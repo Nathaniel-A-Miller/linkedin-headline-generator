@@ -187,7 +187,7 @@
                 fields: [
                     { label: "A kind of work", key: "fieldA" },
                     { label: "Another kind of work", key: "fieldB" },
-                    { label: "What happens when you walk in a room?", key: "impact" }
+                    { label: "Activities (plural)", key: "impact" }
                 ],
                 generate: (data) => `Love child of ${data.fieldA} and ${data.fieldB} | Making ${data.impact} happen`
             },
@@ -197,19 +197,19 @@
                     { label: "Your industry", key: "industry" },
                     { label: "Something old", key: "oldWay" },
                     { label: "Something new", key: "newWay" },
-                    { label: "Your superpower", key: "superpower" }
+                    { label: "A superhero's name", key: "superpower" },
+                    { label: "A work skill", key: "workSkill"}
                 ],
-                generate: (data) => `${data.industry} rebel with a cause | Turning ${data.oldWay} into ${data.newWay} | ${data.superpower}`
+                generate: (data) => `${data.industry} rebel with a cause | Turning ${data.oldWay} into ${data.newWay} | ${data.superpower} of ${data.workSkill}`
             },
             {
                 name: "The Manifesto",
                 fields: [
                     { label: "A skill", key: "skill" },
                     { label: "Bold claim", key: "boldClaim" },
-                    { label: "Company name", key: "company" },
                     { label: "Something you wouldn't say at work", key: "quirkyTouch" }
                 ],
-                generate: (data) => `Professional ${data.skill} slinger | ${data.boldClaim} | ${data.company} | ${data.quirkyTouch}`
+                generate: (data) => `Professional ${data.skill} slinger | "${data.boldClaim}" | ${data.quirkyTouch}`
             },
             {
                 name: "The Origin Story",
@@ -217,9 +217,10 @@
                     { label: "Humble beginning", key: "beginning" },
                     { label: "Current achievement", key: "achievement" },
                     { label: "Verb", key: "mission" },
-                    { label: "Royal title", key: "title" }
+                    { label: "Royal title", key: "title" },
+                    { label: "Company name", key: "companyName" }
                 ],
-                generate: (data) => `From ${data.beginning} to ${data.achievement} | Now helping others ${data.mission} | ${data.title}`
+                generate: (data) => `From ${data.beginning} to ${data.achievement} | Now helping others ${data.mission} | ${data.title} @ ${data.companyName}`
             },
             {
                 name: "The Triple Threat",
