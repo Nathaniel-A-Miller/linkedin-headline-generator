@@ -187,7 +187,7 @@
                 fields: [
                     { label: "A kind of work", key: "fieldA" },
                     { label: "Another kind of work", key: "fieldB" },
-                    { label: "Activities (plural)", key: "impact" }
+                    { label: "What happens when you walk in a room?", key: "impact" }
                 ],
                 generate: (data) => `Love child of ${data.fieldA} and ${data.fieldB} | Making ${data.impact} happen`
             },
@@ -197,19 +197,19 @@
                     { label: "Your industry", key: "industry" },
                     { label: "Something old", key: "oldWay" },
                     { label: "Something new", key: "newWay" },
-                    { label: "A superhero's name", key: "superpower" },
-                    { label: "A work skill", key: "workSkill"}
+                    { label: "Your superpower", key: "superpower" }
                 ],
-                generate: (data) => `${data.industry} rebel with a cause | Turning the ${data.oldWay} into ${data.newWay} | ${data.superpower} of ${data.workSkill}`
+                generate: (data) => `${data.industry} rebel with a cause | Turning ${data.oldWay} into ${data.newWay} | ${data.superpower}`
             },
             {
                 name: "The Manifesto",
                 fields: [
                     { label: "A skill", key: "skill" },
                     { label: "Bold claim", key: "boldClaim" },
+                    { label: "Company name", key: "company" },
                     { label: "Something you wouldn't say at work", key: "quirkyTouch" }
                 ],
-                generate: (data) => `Professional ${data.skill} slinger | "${data.boldClaim}" | ${data.quirkyTouch}`
+                generate: (data) => `Professional ${data.skill} slinger | ${data.boldClaim} | ${data.company} | ${data.quirkyTouch}`
             },
             {
                 name: "The Origin Story",
@@ -217,10 +217,9 @@
                     { label: "Humble beginning", key: "beginning" },
                     { label: "Current achievement", key: "achievement" },
                     { label: "Verb", key: "mission" },
-                    { label: "Royal title", key: "title" },
-                    { label: "Company name", key: "companyName" }
+                    { label: "Royal title", key: "title" }
                 ],
-                generate: (data) => `From ${data.beginning} to ${data.achievement} | Now helping others ${data.mission} | ${data.title} @ ${data.companyName}`
+                generate: (data) => `From ${data.beginning} to ${data.achievement} | Now helping others ${data.mission} | ${data.title}`
             },
             {
                 name: "The Triple Threat",
@@ -248,7 +247,7 @@
                     { label: "Skill 1", key: "skill1" },
                     { label: "Skill 2", key: "skill2" },
                     { label: "Dynamic adjective", key: "outcome" },
-                    { label: "Work-related noun", key: "title" },
+                    { label: "Work-related adjective", key: "title" },
                     { label: "Personality trait", key: "trait" }
                 ],
                 generate: (data) => `Mixing ${data.skill1} + ${data.skill2} to create ${data.outcome} magic | ${data.title} Guru | ${data.trait} optimist`
@@ -268,7 +267,7 @@
                     { label: "Boring thing", key: "boringThing" },
                     { label: "Exciting thing", key: "excitingThing" },
                     { label: "Positive emotion", key: "creativeTitle" },
-                    { label: "A social cause", key: "cause" }
+                    { label: "A cause", key: "cause" }
                 ],
                 generate: (data) => `Turning ${data.boringThing} into ${data.excitingThing} | ${data.creativeTitle} Creator | Champion of ${data.cause}`
             },
@@ -277,7 +276,7 @@
                 fields: [
                     { label: "Job title", key: "jobTitle" },
                     { label: "Passion project", key: "passion" },
-                    { label: "Something abstract", key: "vision" },
+                    { label: "Something that can be built", key: "vision" },
                     { label: "Random emotion", key: "motivation" }
                 ],
                 generate: (data) => `${data.jobTitle} by day, ${data.passion} by night | Building ${data.vision} | Fueled by ${data.motivation}`
@@ -316,7 +315,7 @@
             const formData = new FormData(e.target);
             const data = {};
             formData.forEach((value, key) => {
-                data[key] = value.trim();
+                data[key] = value.trim().toLowerCase();
             });
 
             const headline = currentTemplate.generate(data);
