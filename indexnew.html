@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn Headline Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+
+None
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        button {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .generate-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .new-btn {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .new-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .result {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+        }
+
+        .result.show {
+            display: block;
+            animation: slideIn 0.5s;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .headline-text {
+            color: #555;
+            font-size: 1.1em;
+            line-height: 1.6;
+            word-wrap: break-word;
+        }
+
+        .copy-btn {
+            margin-top: 15px;
+            width: 100%;
+            padding: 10px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .copy-btn:hover {
+            background: #5568d3;
+        }
+
+        .copy-btn.copied {
+            background: #48bb78;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>LinkedIn Headline Generator</h1>
+        
+        <form id="headlineForm">
+            <div id="formFields"></div>
+            
+            <div class="button-group">
+                <button type="submit" class="generate-btn">Generate Headline</button>
+                <button type="button" class="new-btn" onclick="newTemplate()">New Template</button>
+            </div>
+        </form>
+
+        <div class="result" id="result">
+            <h3>Your LinkedIn Headline:</h3>
+            <div class="headline-text" id="headlineText"></div>
+            <button class="copy-btn" onclick="copyHeadline()">Copy to Clipboard</button>
+        </div>
+    </div>
+
+    <script>
+        const templates = [
+            {
+                name: "The Mashup",
+                fields: [
+                    { label: "A kind of work", key: "fieldA" },
+                    { label: "Another kind of work", key: "fieldB" },
+                    { label: "What happens when you walk in a room?", key: "impact" }
+                ],
+                generate: (data) => `Love child of ${data.fieldA} and ${data.fieldB} | Making ${data.impact} happen`
+            },
+            {
+                name: "The Disruptor",
+                fields: [
+                    { label: "Your industry", key: "industry" },
+                    { label: "Something old", key: "oldWay" },
+                    { label: "Something new", key: "newWay" },
+                    { label: "Your superpower", key: "superpower" }
+                ],
+                generate: (data) => `${data.industry} rebel with a cause | Turning ${data.oldWay} into ${data.newWay} | ${data.superpower}`
+            },
+            {
+                name: "The Manifesto",
+                fields: [
+                    { label: "A skill", key: "skill" },
+                    { label: "Bold claim", key: "boldClaim" },
+                    { label: "Company name", key: "company" },
+                    { label: "Something you wouldn't say at work", key: "quirkyTouch" }
+                ],
+                generate: (data) => `Professional ${data.skill} slinger | ${data.boldClaim} | ${data.company} | ${data.quirkyTouch}`
+            },
+            {
+                name: "The Origin Story",
+                fields: [
+                    { label: "Humble beginning", key: "beginning" },
+                    { label: "Current achievement", key: "achievement" },
+                    { label: "Verb", key: "mission" },
+                    { label: "Royal title", key: "title" }
+                ],
+                generate: (data) => `From ${data.beginning} to ${data.achievement} | Now helping others ${data.mission} | ${data.title}`
+            },
+            {
+                name: "The Triple Threat",
+                fields: [
+                    { label: "Creative descriptor", key: "descriptor" },
+                    { label: "Your expertise", key: "expertise" },
+                    { label: "Your passion", key: "passion" },
+                    { label: "Describe your cooking in 1 to 3 words", key: "outcome" }
+                ],
+                generate: (data) => `${data.descriptor} × ${data.expertise} × ${data.passion} = ${data.outcome}`
+            },
+            {
+                name: "The Translator",
+                fields: [
+                    { label: "How do you speak?", key: "jargon" },
+                    { label: "Results you deliver", key: "results" },
+                    { label: "Work-related adjective", key: "title" },
+                    { label: "Industry", key: "industry" }
+                ],
+                generate: (data) => `I speak fluent ${data.jargon} and translate it into ${data.results} | ${data.title} Ninja | ${data.industry} Whisperer`
+            },
+            {
+                name: "The Mad Scientist",
+                fields: [
+                    { label: "Skill 1", key: "skill1" },
+                    { label: "Skill 2", key: "skill2" },
+                    { label: "Dynamic adjective", key: "outcome" },
+                    { label: "Work-related adjective", key: "title" },
+                    { label: "Personality trait", key: "trait" }
+                ],
+                generate: (data) => `Mixing ${data.skill1} + ${data.skill2} to create ${data.outcome} magic | ${data.title} Guru | ${data.trait} optimist`
+            },
+            {
+                name: "The Provocateur",
+                fields: [
+                    { label: "Something that upsets people", key: "boldStatement" },
+                    { label: "Work-related noun", key: "title" },
+                    { label: "Something unlikely", key: "uniqueAngle" }
+                ],
+                generate: (data) => `${data.boldStatement}-enabler | ${data.title} Black Belt | Proof that ${data.uniqueAngle} works`
+            },
+            {
+                name: "The Storyteller",
+                fields: [
+                    { label: "Boring thing", key: "boringThing" },
+                    { label: "Exciting thing", key: "excitingThing" },
+                    { label: "Positive emotion", key: "creativeTitle" },
+                    { label: "A cause", key: "cause" }
+                ],
+                generate: (data) => `Turning ${data.boringThing} into ${data.excitingThing} | ${data.creativeTitle} Creator | Champion of ${data.cause}`
+            },
+            {
+                name: "The Genre-Bender",
+                fields: [
+                    { label: "Job title", key: "jobTitle" },
+                    { label: "Passion project", key: "passion" },
+                    { label: "Something that can be built", key: "vision" },
+                    { label: "Random emotion", key: "motivation" }
+                ],
+                generate: (data) => `${data.jobTitle} by day, ${data.passion} by night | Building ${data.vision} | Fueled by ${data.motivation}`
+            }
+        ];
+
+        let currentTemplate;
+
+        function loadTemplate(template) {
+            currentTemplate = template;
+            
+            const formFields = document.getElementById('formFields');
+            formFields.innerHTML = '';
+            
+            template.fields.forEach(field => {
+                const formGroup = document.createElement('div');
+                formGroup.className = 'form-group';
+                formGroup.innerHTML = `
+                    <label>${field.label}</label>
+                    <input type="text" name="${field.key}" required>
+                `;
+                formFields.appendChild(formGroup);
+            });
+
+            document.getElementById('result').classList.remove('show');
+        }
+
+        function newTemplate() {
+            const randomTemplate = templates[Math.floor(Math.random() * templates.length)];
+            loadTemplate(randomTemplate);
+        }
+
+        // Wait for DOM to be ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load a random template on page load
+            newTemplate();
+        });
+
+        document.getElementById('headlineForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value.trim().toLowerCase();
+            });
+
+            let headline = currentTemplate.generate(data);
+            // Capitalize first letter of headline
+            headline = headline.charAt(0).toUpperCase() + headline.slice(1);
+            
+            document.getElementById('headlineText').textContent = headline;
+            document.getElementById('result').classList.add('show');
+        });
+
+        function copyHeadline() {
+            const headline = document.getElementById('headlineText').textContent;
+            navigator.clipboard.writeText(headline).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = 'Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+None
+    </script>
+</body>
+</html>
