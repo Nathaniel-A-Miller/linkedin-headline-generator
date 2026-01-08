@@ -267,7 +267,7 @@ None
                     { label: "Boring thing", key: "boringThing" },
                     { label: "Exciting thing", key: "excitingThing" },
                     { label: "Positive emotion", key: "creativeTitle" },
-                    { label: "A cause", key: "cause" }
+                    { label: "An imaginary social cause", key: "cause" }
                 ],
                 generate: (data) => `Turning ${data.boringThing} into ${data.excitingThing} | ${data.creativeTitle} Creator | Champion of ${data.cause}`
             },
@@ -275,8 +275,8 @@ None
                 name: "The Genre-Bender",
                 fields: [
                     { label: "Job title", key: "jobTitle" },
-                    { label: "Passion project", key: "passion" },
-                    { label: "Something that can be built", key: "vision" },
+                    { label: "Your ideal job", key: "passion" },
+                    { label: "Something that can be built (plural)", key: "vision" },
                     { label: "Random emotion", key: "motivation" }
                 ],
                 generate: (data) => `${data.jobTitle} by day, ${data.passion} by night | Building ${data.vision} | Fueled by ${data.motivation}`
