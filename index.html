@@ -317,12 +317,12 @@
             const formData = new FormData(e.target);
             const data = {};
             formData.forEach((value, key) => {
-                data[key] = value.trim().toLowerCase();
+                data[key] = value.trim();
             });
 
             let headline = currentTemplate.generate(data);
-            // Capitalize first letter of headline and first letter after each |
-            headline = headline.split('|').map((segment, index) => {
+            // Capitalize first letter after each |
+            headline = headline.split('|').map((segment) => {
                 const trimmed = segment.trim();
                 return trimmed.charAt(0).toUpperCase() + trimmed.slice(1);
             }).join(' | ');
