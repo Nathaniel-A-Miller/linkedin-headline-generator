@@ -37,8 +37,6 @@
             font-size: 2em;
         }
 
-None
-
         .form-group {
             margin-bottom: 20px;
         }
@@ -309,9 +307,7 @@ None
             loadTemplate(randomTemplate);
         }
 
-        // Wait for DOM to be ready
         document.addEventListener('DOMContentLoaded', function() {
-            // Load a random template on page load
             newTemplate();
         });
 
@@ -325,8 +321,11 @@ None
             });
 
             let headline = currentTemplate.generate(data);
-            // Capitalize first letter of headline
-            headline = headline.charAt(0).toUpperCase() + headline.slice(1);
+            // Capitalize first letter of headline and first letter after each |
+            headline = headline.split('|').map((segment, index) => {
+                const trimmed = segment.trim();
+                return trimmed.charAt(0).toUpperCase() + trimmed.slice(1);
+            }).join(' | ');
             
             document.getElementById('headlineText').textContent = headline;
             document.getElementById('result').classList.add('show');
@@ -345,8 +344,6 @@ None
                 }, 2000);
             });
         }
-
-None
     </script>
 </body>
 </html>
